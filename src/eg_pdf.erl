@@ -671,7 +671,8 @@ handle_cast({info,Info}, [PDFC, Stream]) ->
 	    {noreply,  [PDFC#pdfContext{info=NewInfo}, Stream]};
 	          
 handle_cast({stream, {append, String}}, [PDFC, Stream]) ->	    
-	    B = list_to_binary(convert(PDFC#pdfContext.font_handler, String)),
+	    %B = list_to_binary(convert(PDFC#pdfContext.font_handler, String)),
+	    B = unicode:characters_to_binary(convert(PDFC#pdfContext.font_handler, String)),
 	    Binary = <<Stream/binary, B/binary, <<" ">>/binary>>,
 	    {noreply, [PDFC, Binary]};
 	     
